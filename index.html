@@ -11,6 +11,10 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -18,52 +22,79 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 1rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
             background: white;
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
+            padding: clamp(1.5rem, 8vw, 2.5rem);
             max-width: 500px;
             width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
             color: #333;
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 28px;
+            margin-bottom: clamp(0.5rem, 2vw, 0.75rem);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            line-height: 1.2;
         }
 
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            margin-bottom: clamp(1.5rem, 5vw, 2rem);
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            line-height: 1.5;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: clamp(1rem, 4vw, 1.5rem);
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             color: #333;
             font-weight: 600;
-            font-size: 14px;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            line-height: 1.4;
         }
 
         input {
             width: 100%;
-            padding: 12px;
+            padding: clamp(0.75rem, 2.5vw, 1rem);
             border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: clamp(0.95rem, 2vw, 1rem);
             font-family: inherit;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #fff;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            padding: 0.5rem;
         }
 
         input:focus {
@@ -72,32 +103,24 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .input-wrapper {
-            display: flex;
-            gap: 12px;
-            align-items: flex-end;
-        }
-
-        .input-wrapper .form-group {
-            flex: 1;
-            margin-bottom: 0;
-        }
-
-        .input-wrapper .form-group label {
-            margin-bottom: 8px;
+        input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
         }
 
         button {
             width: 100%;
-            padding: 14px;
+            padding: clamp(0.85rem, 3vw, 1rem);
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: clamp(0.95rem, 2vw, 1.05rem);
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            min-height: 44px;
+            touch-action: manipulation;
         }
 
         button:hover {
@@ -109,12 +132,19 @@
             transform: translateY(0);
         }
 
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .result-section {
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: clamp(1.5rem, 5vw, 2rem);
+            padding: clamp(1rem, 4vw, 1.5rem);
             background: #f8f9fa;
-            border-radius: 8px;
+            border-radius: 10px;
             display: none;
+            animation: slideIn 0.3s ease-out;
         }
 
         .result-section.show {
@@ -123,74 +153,255 @@
 
         .result-label {
             color: #666;
-            font-size: 13px;
-            margin-bottom: 8px;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            font-weight: 700;
         }
 
         .result-date {
-            font-size: 28px;
+            font-size: clamp(1.5rem, 6vw, 2rem);
             font-weight: 700;
             color: #667eea;
-            margin-bottom: 12px;
+            margin-bottom: clamp(0.75rem, 3vw, 1rem);
+            word-break: break-word;
+            line-height: 1.3;
         }
 
         .result-details {
             background: white;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: clamp(0.75rem, 3vw, 1rem);
+            border-radius: 8px;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
             color: #666;
             line-height: 1.6;
+            border: 1px solid #e0e0e0;
         }
 
         .detail-row {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            gap: 1rem;
+            align-items: center;
+            padding: clamp(0.4rem, 1.5vw, 0.5rem) 0;
+        }
+
+        .detail-row:not(:last-child) {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-row span:first-child {
+            flex-shrink: 0;
         }
 
         .detail-row strong {
             color: #333;
+            font-weight: 600;
+            text-align: right;
+            word-break: break-word;
         }
 
         .copy-btn {
             background: #f0f0f0;
             color: #333;
             border: 1px solid #ddd;
-            padding: 10px;
-            font-size: 13px;
-            margin-top: 12px;
+            padding: clamp(0.65rem, 2.5vw, 0.85rem);
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            margin-top: clamp(0.75rem, 2vw, 1rem);
             font-weight: 500;
+            min-height: 44px;
         }
 
         .copy-btn:hover {
             background: #e0e0e0;
         }
 
+        .copy-btn:active {
+            background: #d0d0d0;
+        }
+
         .error {
             color: #e74c3c;
-            font-size: 13px;
-            margin-top: 8px;
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            margin-top: 0.35rem;
             display: none;
+            line-height: 1.4;
         }
 
         .error.show {
             display: block;
         }
 
-        @media (max-width: 600px) {
+        /* Tablet (768px and up) */
+        @media (min-width: 768px) {
+            body {
+                padding: 2rem;
+            }
+
             .container {
-                padding: 30px 20px;
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+                max-height: 95vh;
             }
 
             h1 {
-                font-size: 24px;
+                margin-bottom: 0.25rem;
+            }
+
+            .subtitle {
+                margin-bottom: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            .form-group {
+                margin-bottom: 0.75rem;
+            }
+
+            button {
+                padding: 0.7rem;
+                min-height: 40px;
+            }
+
+            .result-section {
+                margin-top: 1rem;
+                padding: 0.75rem;
             }
 
             .result-date {
-                font-size: 24px;
+                margin-bottom: 0.5rem;
+            }
+
+            .copy-btn {
+                margin-top: 0.5rem;
+                padding: 0.6rem;
+                min-height: 40px;
+            }
+        }
+
+        /* Small devices (320px and up) */
+        @media (max-width: 360px) {
+            .container {
+                padding: 1.25rem;
+            }
+
+            label {
+                font-size: 0.8rem;
+            }
+
+            button {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Large desktop (1024px and up) */
+        @media (min-width: 1024px) {
+            .container {
+                box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+                border-radius: 16px;
+            }
+
+            button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 24px rgba(102, 126, 234, 0.5);
+            }
+        }
+
+        /* iPhone notch support */
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+                padding-top: max(1rem, env(safe-area-inset-top));
+                padding-bottom: max(1rem, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #5568d3 0%, #6a3a8a 100%);
+            }
+
+            .container {
+                background: #1e1e1e;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            }
+
+            h1, label {
+                color: #e8e8e8;
+            }
+
+            .subtitle {
+                color: #b0b0b0;
+            }
+
+            input {
+                background: #2a2a2a;
+                border-color: #444;
+                color: #e8e8e8;
+            }
+
+            input:focus {
+                border-color: #667eea;
+            }
+
+            .result-section {
+                background: #252525;
+            }
+
+            .result-details {
+                background: #2a2a2a;
+                border-color: #444;
+                color: #b0b0b0;
+            }
+
+            .detail-row strong {
+                color: #e8e8e8;
+            }
+
+            .detail-row:not(:last-child) {
+                border-bottom-color: #333;
+            }
+
+            .copy-btn {
+                background: #333;
+                color: #e8e8e8;
+                border-color: #444;
+            }
+
+            .copy-btn:hover {
+                background: #3a3a3a;
+            }
+
+            .error {
+                color: #ff6b6b;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            button {
+                display: none;
             }
         }
     </style>
@@ -231,13 +442,22 @@
                     <strong id="dayOfWeek"></strong>
                 </div>
             </div>
-            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Result Date</button>
+            <button class="copy-btn" onclick="copyToClipboard(this)">📋 Copy Result Date</button>
         </div>
     </div>
 
     <script>
-        // Set today's date as default
-        document.getElementById('inputDate').valueAsDate = new Date();
+        // Initialize app
+        function init() {
+            // Set today's date as default
+            const dateInput = document.getElementById('inputDate');
+            dateInput.valueAsDate = new Date();
+            
+            // Focus management for better mobile UX
+            dateInput.addEventListener('change', () => {
+                document.getElementById('inputDays').focus();
+            });
+        }
 
         function calculateDate() {
             clearErrors();
@@ -282,6 +502,13 @@
                 document.getElementById('dayOfWeek').textContent = dayOfWeek;
 
                 document.getElementById('resultSection').classList.add('show');
+                
+                // Scroll result into view on mobile
+                if (window.innerWidth < 768) {
+                    setTimeout(() => {
+                        document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                }
             } catch (error) {
                 showError('dateError', 'Invalid date');
             }
@@ -310,29 +537,75 @@
             });
         }
 
-        function copyToClipboard() {
+        function copyToClipboard(btn) {
             const resultDate = document.getElementById('resultDate').textContent;
+            
+            // Fallback for older browsers
+            if (!navigator.clipboard) {
+                fallbackCopy(resultDate);
+                return;
+            }
+            
             navigator.clipboard.writeText(resultDate).then(() => {
-                const btn = event.target;
                 const originalText = btn.textContent;
                 btn.textContent = '✓ Copied!';
+                btn.disabled = true;
                 setTimeout(() => {
                     btn.textContent = originalText;
+                    btn.disabled = false;
                 }, 2000);
+            }).catch(() => {
+                fallbackCopy(resultDate);
+            });
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert('Date copied to clipboard!');
+            } catch (err) {
+                alert('Failed to copy. Please copy manually.');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', init);
+
+        const calculateBtn = document.querySelector('button[onclick="calculateDate()"]');
+        if (calculateBtn) {
+            calculateBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                calculateDate();
             });
         }
 
         // Allow Enter key to calculate
         document.getElementById('inputDays').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 calculateDate();
             }
         });
 
         document.getElementById('inputDate').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                calculateDate();
+                e.preventDefault();
+                document.getElementById('inputDays').focus();
             }
+        });
+
+        // Debounce for input validation feedback (optional)
+        let validationTimeout;
+        document.getElementById('inputDays').addEventListener('input', () => {
+            clearTimeout(validationTimeout);
+            clearErrors();
         });
     </script>
 </body>
