@@ -236,12 +236,43 @@
             display: block;
         }
 
+<<<<<<< HEAD
         /* Tablet (768px and up) */
         @media (min-width: 768px) {
             body {
                 padding: 2rem;
             }
 
+=======
+        /* Ad Styles */
+        .ad-container {
+            margin: 20px 0;
+            text-align: center;
+            min-height: 60px;
+        }
+
+        .header-ad {
+            margin-bottom: 20px;
+        }
+
+        .inline-ad {
+            margin: 20px 0;
+        }
+
+        .footer-ad {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Hide ads on very small screens if needed */
+        @media (max-width: 320px) {
+            .ad-container {
+                margin: 15px 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+>>>>>>> e61acad (feat: optimize ad placement for maximum revenue)
             .container {
                 box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
             }
@@ -427,6 +458,19 @@
         </div>
 
         <button onclick="calculateDate()">Calculate</button>
+
+        <!-- Inline Ad -->
+        <div class="ad-container inline-ad">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
 
         <div class="result-section" id="resultSection">
             <div class="result-label">Result</div>
