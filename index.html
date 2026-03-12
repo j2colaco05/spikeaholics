@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Plus/Minus Days</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .input-wrapper .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .input-wrapper .form-group label {
+            margin-bottom: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-date {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        .result-details {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .detail-row strong {
+            color: #333;
+        }
+
+        .copy-btn {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 13px;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .copy-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .result-date {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 Date Calculator</h1>
+        <p class="subtitle">Add or subtract days from any date</p>
+
+        <div class="form-group">
+            <label for="inputDate">Start Date</label>
+            <input type="date" id="inputDate">
+            <div class="error" id="dateError"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputDays">Days (positive or negative)</label>
+            <input type="number" id="inputDays" placeholder="e.g., 30 or -15">
+            <div class="error" id="daysError"></div>
+        </div>
+
+        <button onclick="calculateDate()">Calculate</button>
+
+        <div class="result-section" id="resultSection">
+            <div class="result-label">Result</div>
+            <div class="result-date" id="resultDate"></div>
+            <div class="result-details">
+                <div class="detail-row">
+                    <span>Original Date:</span>
+                    <strong id="originalDate"></strong>
+                </div>
+                <div class="detail-row">
+                    <span>Days Added/Subtracted:</span>
+                    <strong id="daysAdded"></strong>
+                </div>
+                <div class="detail-row">
+                    <span>Day of Week:</span>
+                    <strong id="dayOfWeek"></strong>
+                </div>
+            </div>
+            <button class="copy-btn" onclick="copyToClipboard()">📋 Copy Result Date</button>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date as default
+        document.getElementById('inputDate').valueAsDate = new Date();
+
+        function calculateDate() {
+            clearErrors();
+            
+            const dateInput = document.getElementById('inputDate').value;
+            const daysInput = document.getElementById('inputDays').value;
+
+            // Validation
+            if (!dateInput) {
+                showError('dateError', 'Please select a date');
+                return;
+            }
+
+            if (daysInput === '' || daysInput === null) {
+                showError('daysError', 'Please enter a number of days');
+                return;
+            }
+
+            const days = parseInt(daysInput, 10);
+            if (isNaN(days)) {
+                showError('daysError', 'Please enter a valid number');
+                return;
+            }
+
+            try {
+                // Parse the date
+                const originalDate = new Date(dateInput + 'T00:00:00');
+                
+                // Calculate new date
+                const resultDate = new Date(originalDate);
+                resultDate.setDate(resultDate.getDate() + days);
+
+                // Format dates
+                const originalFormatted = formatDate(originalDate);
+                const resultFormatted = formatDate(resultDate);
+                const dayOfWeek = getDayOfWeek(resultDate);
+
+                // Display result
+                document.getElementById('resultDate').textContent = resultFormatted;
+                document.getElementById('originalDate').textContent = originalFormatted;
+                document.getElementById('daysAdded').textContent = days > 0 ? `+${days}` : days;
+                document.getElementById('dayOfWeek').textContent = dayOfWeek;
+
+                document.getElementById('resultSection').classList.add('show');
+            } catch (error) {
+                showError('dateError', 'Invalid date');
+            }
+        }
+
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function getDayOfWeek(date) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            return days[date.getDay()];
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.add('show');
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+        }
+
+        function copyToClipboard() {
+            const resultDate = document.getElementById('resultDate').textContent;
+            navigator.clipboard.writeText(resultDate).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Allow Enter key to calculate
+        document.getElementById('inputDays').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calculateDate();
+            }
+        });
+
+        document.getElementById('inputDate').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calculateDate();
+            }
+        });
+    </script>
+</body>
+</html>
